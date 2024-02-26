@@ -1,0 +1,84 @@
+from tkinter import *
+import tkinter as tk
+from random import randint
+from tkinter import PhotoImage
+
+# Create the GUI
+root = tk.Tk()
+root.title('Rock Paper Scissors')
+root.config(bg="white")
+
+rock_img = PhotoImage(file='F:\\tkinter_project\\studysession\\rock_user.png')
+rock_img_comp = PhotoImage(file='F:\\tkinter_project\\studysession\\rock.png')
+
+paper_img = PhotoImage(file='F:\\tkinter_project\\studysession\\paper_user.png')
+paper_img_comp = PhotoImage(file='F:\\tkinter_project\\studysession\\paper.png')
+
+scissors_img = PhotoImage(file='F:\\tkinter_project\\studysession\\scissors_user.png')
+scissors_img_comp = PhotoImage(file='F:\\tkinter_project\\studysession\\scissors.png')
+
+#insert picture
+user_label=Label(root, image=scissors_img, bg="grey")
+comp_label=Label(root, image=scissors_img_comp, bg="grey")
+comp_label.grid(row=1, column=0)
+user_label.grid(row=1, column=4)
+
+#indicators
+user_indicators= Label(root, font=50, text="PLAYER", bg="#9b59b6", fg="white")
+Comp_indicators= Label(root, font=50, text="COMPUTER", bg="#9b59b6", fg="white")
+user_indicators.grid(row=0, column=3)
+Comp_indicators.grid(row=0, column=1)
+
+#msg
+msg= Label(root, font=50, bg="white")
+msg.grid(row=3, column=2)
+
+#update msg
+def updatemsg(x):
+    msg['text']=x
+
+
+Choices= ["rock","paper","scissors"]
+def updateChoice(x):
+
+    #Computer
+    CompChoice= Choices[randint(0,2)]
+    if CompChoice=="rock":
+        comp_label.configure(image=rock_img_comp)
+    elif CompChoice=="paper":
+        comp_label.configure(image=paper_img_comp)
+    else:
+        comp_label.configure(image=scissors_img_comp)
+
+    #user
+    if x=="rock":
+        user_label.configure(image=rock_img)
+    elif x=="paper":
+        user_label.configure(image=paper_img)
+    else:
+        user_label.configure(image=scissors_img)
+    checkwin(x, CompChoice)
+
+#checkwin
+def checkwin(player, computer):
+    
+    if player== computer:
+        updatemsg("It's Tie!!")
+    
+    elif (player == 'rock' and computer== 'scissors') or \
+        (player == 'paper' and computer == 'rock') or \
+        (player == 'scissors' and computer== 'paper'):
+        updatemsg("You Win!!")
+
+    else:
+        updatemsg("Computer wins!    You loosee!!")
+
+#buttons
+rock_button = Button(root,width=20, height=2, text="ROCK", 
+                     bg="#FF3E4D", fg="white", command= lambda:updateChoice("rock")).grid(row=2, column=1)
+paper_button = Button(root,width=20, height=2, text="PAPER", 
+                      bg="#FAD02E", fg="white", command= lambda:updateChoice("paper")).grid(row=2, column=2)
+scissors_button = Button(root,width=20, height=2, text="SCISSORS", 
+                         bg="#0ABDE3", fg="white", command= lambda:updateChoice("scissors")).grid(row=2, column=3)
+
+root.mainloop()
